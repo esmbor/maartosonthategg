@@ -1,3 +1,4 @@
+import PublicHeader from "@/components/PublicHeader";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,27 +49,7 @@ const picks = [
 export default function Home() {
   return (
     <main>
-      <header className="header">
-        <div className="site-shell header-inner">
-          <Link href="/" className="brand">
-            <Image
-              src="/images/logo-maarto.png"
-              alt="Maarto's on that Egg"
-              width={80}
-              height={80}
-              priority
-            />
-
-            <span className="brand-name">Maarto&apos;s on that Egg</span>
-          </Link>
-
-          <nav className="nav">
-            <Link href="/recepten">Recepten</Link>
-            <Link href="/tips">Maarto&apos;s Tips</Link>
-            <Link href="/over">Over Maarto</Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader absolute />
 
       <section className="hero">
         <div className="site-shell hero-grid">

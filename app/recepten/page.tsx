@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import PublicHeader from "@/components/PublicHeader";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -108,32 +109,7 @@ export default async function RecipesPage() {
     <main className="recipes-page">
       {/* Header */}
 
-      <header className="recipe-site-header">
-        <div className="site-shell recipe-header-inner">
-          <Link href="/" className="brand">
-            <Image
-              src="/images/logo.png"
-              alt="Maarto's on that Egg"
-              width={70}
-              height={70}
-            />
-          </Link>
-
-          <nav className="recipe-public-nav">
-            <Link href="/recepten">
-              Recepten
-            </Link>
-
-            <Link href="/#tips">
-              Maarto&apos;s Tips
-            </Link>
-
-            <Link href="/#over-maarto">
-              Over Maarto
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader />
 
       {/* Intro */}
 
