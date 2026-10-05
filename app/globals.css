@@ -19,6 +19,10 @@
   --border: rgba(243, 230, 204, 0.14);
 }
 
+/* ------------------------------ */
+/* Base                           */
+/* ------------------------------ */
+
 * {
   box-sizing: border-box;
 }
@@ -42,6 +46,13 @@ a {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 ::selection {
@@ -211,27 +222,40 @@ a {
   margin-top: 34px;
 }
 
+/* ------------------------------ */
+/* Buttons / links                */
+/* ------------------------------ */
+
 .primary-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 54px;
   padding: 0 28px;
+  border: 0;
+  border-radius: 12px;
   background: var(--orange);
   color: #160e09;
-  border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.11em;
   text-transform: uppercase;
+  cursor: pointer;
   transition:
     transform 180ms ease,
-    background 180ms ease;
+    background 180ms ease,
+    opacity 180ms ease;
 }
 
 .primary-button:hover {
   transform: translateY(-3px);
   background: var(--yellow);
+}
+
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  transform: none;
 }
 
 .text-link {
@@ -263,7 +287,7 @@ a {
   justify-content: center;
 }
 
-/* decoratieve cirkels achter de foto */
+/* lichtere ringen achter de foto */
 .hero-visual::before,
 .hero-visual::after {
   content: "";
@@ -283,6 +307,11 @@ a {
   height: 690px;
 }
 
+/*
+ * Wrapper waardoor foto en sticker samen schalen.
+ * Hierdoor blijft de sticker altijd op dezelfde plek
+ * ten opzichte van de foto staan.
+ */
 .hero-media {
   position: relative;
   width: min(530px, 90%);
@@ -294,8 +323,8 @@ a {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   overflow: hidden;
+  border-radius: 50%;
   background: var(--background-soft);
   border: 1px solid rgba(243, 230, 204, 0.12);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
@@ -321,7 +350,7 @@ a {
 
 .hero-sticker {
   position: absolute;
-  right: -45px;
+  right: -8px;
   bottom: 52px;
   width: 126px;
   height: 126px;
@@ -389,11 +418,13 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  border-radius: 18px;
+  border: 1px solid rgba(21, 16, 12, 0.08);
   background: var(--background);
   color: var(--cream);
-  border-radius: 18px;
-  transition: transform 200ms ease;
-  border: 1px solid rgba(21, 16, 12, 0.08);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .recipe-card:hover {
@@ -500,8 +531,8 @@ a {
 .picks {
   position: relative;
   padding: 140px 0;
-  background: var(--green);
   overflow: hidden;
+  background: var(--green);
 }
 
 .picks::after {
@@ -597,6 +628,215 @@ a {
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* ------------------------------ */
+/* Admin login                    */
+/* ------------------------------ */
+
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background:
+    radial-gradient(
+      circle at 72% 25%,
+      rgba(233, 101, 22, 0.13),
+      transparent 35%
+    ),
+    var(--background);
+}
+
+.admin-login-card {
+  width: min(480px, 100%);
+  padding: 42px 50px;
+  background: var(--background-soft);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.3);
+}
+
+.admin-login-logo {
+  display: block;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin: 0 auto 30px;
+}
+
+.admin-login-eyebrow {
+  color: var(--orange);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.admin-login-title {
+  margin: 12px 0 18px;
+  font-size: clamp(2.6rem, 6vw, 3.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.admin-login-title span {
+  display: block;
+  color: var(--yellow);
+}
+
+.admin-login-copy {
+  margin: 0 0 34px;
+  color: var(--cream-soft);
+  line-height: 1.6;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-field label {
+  color: var(--cream-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-field input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--background);
+  color: var(--cream);
+}
+
+.admin-field input::placeholder {
+  color: var(--muted);
+}
+
+.admin-field input:focus {
+  border-color: var(--orange);
+}
+
+.admin-error {
+  margin: 0;
+  color: #ff8a65;
+  font-size: 0.85rem;
+}
+
+.admin-login-button {
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* ------------------------------ */
+/* Admin dashboard                */
+/* ------------------------------ */
+
+.admin-page {
+  min-height: 100vh;
+  padding: 100px 0;
+  background: var(--background);
+}
+
+.admin-header {
+  margin-bottom: 70px;
+}
+
+.admin-title {
+  margin: 12px 0 14px;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.admin-intro {
+  margin: 0;
+  color: var(--cream-soft);
+}
+
+.admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.admin-dashboard-card {
+  position: relative;
+  min-height: 310px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.admin-dashboard-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(233, 101, 22, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.admin-dashboard-number {
+  position: absolute;
+  top: 30px;
+  left: 32px;
+  font-family: var(--font-geist-mono);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.admin-dashboard-eyebrow {
+  color: var(--orange);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.admin-dashboard-card h2 {
+  margin: 8px 0 10px;
+  font-size: 2.8rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.admin-dashboard-card p {
+  max-width: 350px;
+  margin: 0;
+  color: var(--cream-soft);
+  line-height: 1.6;
+}
+
+.admin-dashboard-arrow {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  color: var(--yellow);
+  font-size: 1.8rem;
 }
 
 /* ------------------------------ */
@@ -756,5 +996,23 @@ a {
   .footer-inner {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .admin-login-card {
+    padding: 34px 24px;
+    border-radius: 20px;
+  }
+
+  .admin-login-logo {
+    width: 76px;
+    height: 76px;
+  }
+
+  .admin-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page {
+    padding: 70px 0;
   }
 }
