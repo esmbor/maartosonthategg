@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import LogoutButton from "@/components/admin/LogoutButton";
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -37,6 +38,8 @@ export default async function AdminPage() {
               Tijd om iets lekkers op de Egg te gooien.
             </p>
           </div>
+
+          <LogoutButton />
         </div>
 
         <div className="admin-dashboard-grid">

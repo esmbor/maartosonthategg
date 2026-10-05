@@ -743,6 +743,38 @@ select {
   margin-top: 5px;
 }
 
+.admin-header {
+  margin-bottom: 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.admin-logout-button {
+  flex-shrink: 0;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.admin-logout-button:hover {
+  border-color: var(--orange);
+  color: var(--cream);
+  background: rgba(233, 101, 22, 0.08);
+}
+
 /* ------------------------------ */
 /* Admin dashboard                */
 /* ------------------------------ */
@@ -1014,5 +1046,13 @@ select {
 
   .admin-page {
     padding: 70px 0;
+  }
+
+  .admin-header {
+    flex-direction: column;
+  }
+
+  .admin-logout-button {
+    align-self: flex-start;
   }
 }
