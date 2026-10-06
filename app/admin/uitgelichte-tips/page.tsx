@@ -157,7 +157,7 @@ export default async function FeaturedTipsPage() {
         </h1>
 
         <p className="admin-intro admin-form-intro">
-          Beheer welke drie tips op de homepage
+          Beheer welke vijf tips op de homepage
           worden uitgelicht en bepaal de volgorde.
         </p>
 
