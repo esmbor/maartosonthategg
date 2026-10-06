@@ -1,61 +1,138 @@
-import PublicHeader from "@/components/PublicHeader";
 import Image from "next/image";
 import Link from "next/link";
 
-const recipes = [
-  {
-    number: "01",
-    name: "Pulled Pork",
-    tags: ["Low & Slow", "Varken"],
-    meta: "110°C · ± 8 uur",
-  },
-  {
-    number: "02",
-    name: "Picanha Reverse Sear",
-    tags: ["Reverse Sear", "Rund"],
-    meta: "120°C → hot & fast · ± 1,5 uur",
-  },
-  {
-    number: "03",
-    name: "Pizza van de Egg",
-    tags: ["Hot & Fast", "Pizza"],
-    meta: "300°C · ± 15 minuten",
-  },
-];
+import PublicHeader from "@/components/PublicHeader";
+import { createClient } from "@/lib/supabase/server";
 
-const picks = [
-  {
-    number: "01",
-    name: "Favoriete kernthermometer",
-    type: "Gear",
-  },
-  {
-    number: "02",
-    name: "De rub die altijd in de kast staat",
-    type: "Kruiden",
-  },
-  {
-    number: "03",
-    name: "Rookhout voor low & slow",
-    type: "Fuel & Smoke",
-  },
-  {
-    number: "04",
-    name: "Gietijzer dat tegen een stootje kan",
-    type: "Gear",
-  },
-];
+function formatMinutes(minutes: number | null) {
+  if (!minutes) return null;
 
-export default function Home() {
+  if (minutes < 60) {
+    return `${minutes} min`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remaining = minutes % 60;
+
+  if (remaining === 0) {
+    return `${hours} u`;
+  }
+
+  return `${hours} u ${remaining} min`;
+}
+
+export default async function Home() {
+  const supabase = await createClient();
+
+  const { data: featuredRecipes, error } = await supabase
+    .from("recipes")
+    .select(`
+      id,
+      title,
+      slug,
+      category,
+      cooking_style,
+      cook_time_minutes,
+      bbq_temperature_c,
+      featured,
+      created_at
+    `)
+    .eq("published", true)
+    .eq("featured", true)
+    .order("featured_order", {
+      ascending: true,
+    })
+    .limit(3);
+
+  if (error) {
+    console.error(
+      "Error loading featured recipes:",
+      error
+    );
+  }
+
+  const recipeIds =
+    featuredRecipes?.map((recipe) => recipe.id) ?? [];
+
+  let recipeImages: {
+    recipe_id: string;
+    storage_path: string;
+    alt_text: string | null;
+  }[] = [];
+
+  if (recipeIds.length > 0) {
+    const { data: images, error: imageError } =
+      await supabase
+        .from("recipe_images")
+        .select(`
+          recipe_id,
+          storage_path,
+          alt_text
+        `)
+        .in("recipe_id", recipeIds)
+        .eq("is_main", true);
+
+    if (imageError) {
+      console.error(
+        "Error loading featured recipe images:",
+        imageError
+      );
+    }
+
+    recipeImages = images ?? [];
+  }
+
+  const recipes =
+    featuredRecipes?.map((recipe) => {
+      const image = recipeImages.find(
+        (item) =>
+          item.recipe_id === recipe.id
+      );
+
+      const imageUrl = image
+        ? supabase.storage
+            .from("maarto-images")
+            .getPublicUrl(image.storage_path)
+            .data.publicUrl
+        : null;
+
+      return {
+        ...recipe,
+        imageUrl,
+        imageAlt:
+          image?.alt_text ?? recipe.title,
+      };
+    }) ?? [];
+
+  const picks = [
+    {
+      number: "01",
+      name: "Favoriete kernthermometer",
+      type: "Gear",
+    },
+    {
+      number: "02",
+      name: "De rub die altijd in de kast staat",
+      type: "Kruiden",
+    },
+    {
+      number: "03",
+      name: "Rookhout voor low & slow",
+      type: "Fuel & Smoke",
+    },
+  ];
+
   return (
     <main>
       <PublicHeader absolute />
+
+      {/* HERO */}
 
       <section className="hero">
         <div className="site-shell hero-grid">
           <div>
             <div className="hero-eyebrow">
-              BBQ · Recepten · Tips · Veel vuur
+              Smoke · Fire · Good Food
             </div>
 
             <h1 className="hero-title">
@@ -64,19 +141,26 @@ export default function Home() {
             </h1>
 
             <p className="hero-description">
-              Recepten, tips en alles wat ik onderweg heb geleerd over koken
-              op vuur. Van urenlang low & slow tot iets dat binnen twintig
-              minuten van de Egg komt.
+              Recepten, favoriete tools en alles
+              wat hier op de Big Green Egg
+              belandt.
             </p>
 
             <div className="hero-actions">
-              <Link href="/recepten" className="primary-button">
+              <Link
+                href="/recepten"
+                className="primary-button"
+              >
                 Bekijk de recepten
               </Link>
 
-              <Link href="/tips" className="text-link">
-                Ontdek Maarto&apos;s Tips <span>→</span>
-              </Link>
+              <a
+                href="#tips"
+                className="text-link"
+              >
+                Maarto&apos;s Tips
+                <span>→</span>
+              </a>
             </div>
           </div>
 
@@ -106,11 +190,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="on-the-egg">
+      {/* WHAT'S ON THE EGG */}
+
+      <section
+        className="on-the-egg"
+        id="recepten"
+      >
         <div className="site-shell">
           <div className="section-heading-row">
             <div>
-              <div className="section-eyebrow">De laatste cooks</div>
+              <div className="section-eyebrow">
+                Straight from the fire
+              </div>
+
               <h2 className="section-title">
                 What&apos;s on
                 <br />
@@ -118,44 +210,124 @@ export default function Home() {
               </h2>
             </div>
 
-            <p className="section-intro">
-              Geen gedoe, gewoon goed eten van de BBQ. Dit zijn een paar
-              recepten die momenteel favoriet zijn.
-            </p>
-          </div>
+            <div>
+              <p className="section-intro">
+                De cooks die hier absoluut nog
+                een keer op de Egg komen.
+              </p>
 
-          <div className="recipe-grid">
-            {recipes.map((recipe) => (
               <Link
                 href="/recepten"
-                className="recipe-card"
-                key={recipe.number}
+                className="text-link"
               >
-                <span className="recipe-number">{recipe.number}</span>
-
-                <div className="recipe-content">
-                  <div className="recipe-tags">
-                    {recipe.tags.map((tag) => (
-                      <span className="recipe-tag" key={tag}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="recipe-name">{recipe.name}</h3>
-
-                  <div className="recipe-meta">{recipe.meta}</div>
-                </div>
+                Bekijk alle recepten
+                <span>→</span>
               </Link>
-            ))}
+            </div>
           </div>
+
+          {recipes.length > 0 ? (
+            <div className="recipe-grid">
+              {recipes.map(
+                (recipe, index) => (
+                  <Link
+                    href={`/recepten/${recipe.slug}`}
+                    className="recipe-card"
+                    key={recipe.id}
+                  >
+                    {recipe.imageUrl && (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={recipe.imageUrl}
+                          alt={recipe.imageAlt}
+                          className="homepage-recipe-image"
+                        />
+
+                        <div className="homepage-recipe-overlay" />
+                      </>
+                    )}
+
+                    <div className="recipe-number">
+                      {String(index + 1).padStart(
+                        2,
+                        "0"
+                      )}
+                    </div>
+
+                    <div className="recipe-content">
+                      <div className="recipe-tags">
+                        {recipe.category && (
+                          <span className="recipe-tag">
+                            {recipe.category}
+                          </span>
+                        )}
+
+                        {recipe.cooking_style && (
+                          <span className="recipe-tag">
+                            {recipe.cooking_style}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="recipe-name">
+                        {recipe.title}
+                      </h3>
+
+                      <div className="recipe-meta">
+                        {formatMinutes(
+                          recipe.cook_time_minutes
+                        )}
+
+                        {recipe.cook_time_minutes &&
+                          recipe.bbq_temperature_c && (
+                            <> · </>
+                          )}
+
+                        {recipe.bbq_temperature_c && (
+                          <>
+                            {
+                              recipe.bbq_temperature_c
+                            }
+                            °C
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                )
+              )}
+            </div>
+          ) : (
+            <div className="admin-empty-state">
+              <div className="admin-empty-icon">
+                🔥
+              </div>
+
+              <h2>
+                Nog geen featured cooks.
+              </h2>
+
+              <p>
+                Zet in de admin een gepubliceerd
+                recept op Uitlichten.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
-      <section className="picks">
+      {/* MAARTO'S PICKS */}
+
+      <section
+        className="picks"
+        id="tips"
+      >
         <div className="site-shell picks-grid">
           <div>
-            <div className="section-eyebrow">Maarto&apos;s favorieten</div>
+            <div className="section-eyebrow">
+              Tried & tested
+            </div>
 
             <h2 className="picks-title">
               Maarto&apos;s
@@ -164,36 +336,100 @@ export default function Home() {
             </h2>
 
             <p className="picks-copy">
-              Spullen die hun plekje naast de Egg verdiend hebben. Van
-              favoriete rubs tot tools waar je na één keer gebruiken niet meer
-              zonder wilt. Geen eindeloze lijst met gadgets, gewoon dingen die
-              hier écht gebruikt worden.
+              Spullen die hun plekje naast de Egg
+              verdiend hebben. Van favoriete rubs
+              tot tools waar je na één keer
+              gebruiken niet meer zonder wilt.
+              Geen eindeloze lijst met gadgets,
+              gewoon dingen die hier écht gebruikt
+              worden.
             </p>
 
-            <div style={{ marginTop: "36px" }}>
-              <Link href="/tips" className="text-link">
-                Bekijk alle tips <span>→</span>
+            <div
+              style={{
+                marginTop: "32px",
+              }}
+            >
+              <Link
+                href="/#tips"
+                className="text-link"
+              >
+                Bekijk alle tips
+                <span>→</span>
               </Link>
             </div>
           </div>
 
           <div className="picks-list">
             {picks.map((pick) => (
-              <Link href="/tips" className="pick-item" key={pick.number}>
-                <span className="pick-number">{pick.number}</span>
-                <span className="pick-name">{pick.name}</span>
-                <span className="pick-type">{pick.type}</span>
-              </Link>
+              <div
+                className="pick-item"
+                key={pick.number}
+              >
+                <div className="pick-number">
+                  {pick.number}
+                </div>
+
+                <div className="pick-name">
+                  {pick.name}
+                </div>
+
+                <div className="pick-type">
+                  {pick.type}
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* OVER MAARTO PLACEHOLDER */}
+
+      <section
+        id="over-maarto"
+        style={{
+          padding: "100px 0",
+          background: "var(--background)",
+        }}
+      >
+        <div className="site-shell">
+          <div className="section-eyebrow">
+            Behind the Egg
+          </div>
+
+          <h2
+            className="section-title"
+            style={{
+              color: "var(--cream)",
+            }}
+          >
+            Over Maarto.
+          </h2>
+
+          <p
+            className="hero-description"
+            style={{
+              marginTop: "24px",
+            }}
+          >
+            Binnenkort meer over de man achter
+            het vuur, de cooks en de lichte
+            obsessie met alles wat op de Egg kan.
+          </p>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+
       <footer className="footer">
         <div className="site-shell footer-inner">
-          <div className="footer-brand">Maarto&apos;s on that Egg</div>
+          <div className="footer-brand">
+            Maarto&apos;s on that Egg
+          </div>
 
-          <div>BBQ, recepten en nét iets te veel rook.</div>
+          <div>
+            Fire. Food. Patience.
+          </div>
         </div>
       </footer>
     </main>

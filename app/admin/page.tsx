@@ -78,6 +78,25 @@ export default async function AdminPage() {
 
             <span className="admin-dashboard-arrow">→</span>
           </a>
+
+          <a href="/admin/uitgelicht" className="admin-dashboard-card">
+            <span className="admin-dashboard-number">03</span>
+
+            <div>
+              <span className="admin-dashboard-eyebrow">
+                Homepage
+              </span>
+
+              <h2>Uitgelicht</h2>
+
+              <p>
+                Beheer de recepten die in What&apos;s on the Egg?
+                op de homepage verschijnen.
+              </p>
+            </div>
+
+            <span className="admin-dashboard-arrow">→</span>
+          </a>
         </div>
       </div>
     </main>
