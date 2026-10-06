@@ -165,7 +165,7 @@ export default async function AdminPage() {
               </h2>
 
               <p>
-                Beheer de drie favorieten in
+                Beheer de vijf favorieten in
                 Maarto&apos;s Picks.
               </p>
             </div>
