@@ -3,20 +3,38 @@ import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/admin/LogoutButton";
 
 export default async function AdminPage() {
-  const supabase = await createClient();
+  const supabase =
+    await createClient();
 
-  const { data, error } = await supabase.auth.getClaims();
+  const {
+    data,
+    error,
+  } =
+    await supabase.auth.getClaims();
 
-  if (error || !data?.claims) {
-    redirect("/admin/login");
+  if (
+    error ||
+    !data?.claims
+  ) {
+    redirect(
+      "/admin/login"
+    );
   }
 
-  const userId = data.claims.sub;
+  const userId =
+    data.claims.sub;
 
-  const { data: profile } = await supabase
+  const {
+    data: profile,
+  } = await supabase
     .from("profiles")
-    .select("display_name, role")
-    .eq("id", userId)
+    .select(
+      "display_name, role"
+    )
+    .eq(
+      "id",
+      userId
+    )
     .single();
 
   return (
@@ -24,7 +42,9 @@ export default async function AdminPage() {
       <div className="site-shell">
         <div className="admin-header">
           <div>
-            <div className="hero-eyebrow">Maarto&apos;s backstage</div>
+            <div className="hero-eyebrow">
+              Maarto&apos;s backstage
+            </div>
 
             <h1 className="admin-title">
               Welkom
@@ -43,59 +63,116 @@ export default async function AdminPage() {
         </div>
 
         <div className="admin-dashboard-grid">
-          <a href="/admin/recepten" className="admin-dashboard-card">
-            <span className="admin-dashboard-number">01</span>
+          <a
+            href="/admin/recepten"
+            className="admin-dashboard-card"
+          >
+            <span className="admin-dashboard-number">
+              01
+            </span>
 
             <div>
               <span className="admin-dashboard-eyebrow">
                 Recipes
               </span>
 
-              <h2>Recepten</h2>
+              <h2>
+                Recepten
+              </h2>
 
               <p>
-                Recepten toevoegen, aanpassen en publiceren.
+                Recepten toevoegen, aanpassen
+                en publiceren.
               </p>
             </div>
 
-            <span className="admin-dashboard-arrow">→</span>
+            <span className="admin-dashboard-arrow">
+              →
+            </span>
           </a>
 
-          <a href="/admin/tips" className="admin-dashboard-card">
-            <span className="admin-dashboard-number">02</span>
+          <a
+            href="/admin/tips"
+            className="admin-dashboard-card"
+          >
+            <span className="admin-dashboard-number">
+              02
+            </span>
 
             <div>
               <span className="admin-dashboard-eyebrow">
                 Maarto&apos;s Picks
               </span>
 
-              <h2>Tips</h2>
+              <h2>
+                Tips
+              </h2>
 
               <p>
-                Gear, kruiden, sauzen en andere favorieten.
+                Gear, kruiden, sauzen en andere
+                favorieten.
               </p>
             </div>
 
-            <span className="admin-dashboard-arrow">→</span>
+            <span className="admin-dashboard-arrow">
+              →
+            </span>
           </a>
 
-          <a href="/admin/uitgelicht" className="admin-dashboard-card">
-            <span className="admin-dashboard-number">03</span>
+          <a
+            href="/admin/uitgelicht"
+            className="admin-dashboard-card"
+          >
+            <span className="admin-dashboard-number">
+              03
+            </span>
 
             <div>
               <span className="admin-dashboard-eyebrow">
-                Homepage
+                Homepage · Recipes
               </span>
 
-              <h2>Uitgelicht</h2>
+              <h2>
+                Uitgelichte recepten
+              </h2>
 
               <p>
-                Beheer de recepten die in What&apos;s on the Egg?
-                op de homepage verschijnen.
+                Beheer de drie recepten in
+                What&apos;s on the Egg?
               </p>
             </div>
 
-            <span className="admin-dashboard-arrow">→</span>
+            <span className="admin-dashboard-arrow">
+              →
+            </span>
+          </a>
+
+          <a
+            href="/admin/uitgelichte-tips"
+            className="admin-dashboard-card"
+          >
+            <span className="admin-dashboard-number">
+              04
+            </span>
+
+            <div>
+              <span className="admin-dashboard-eyebrow">
+                Homepage · Picks
+              </span>
+
+              <h2>
+                Uitgelichte tips
+              </h2>
+
+              <p>
+                Beheer de drie favorieten in
+                Maarto&apos;s Picks.
+              </p>
+            </div>
+
+            <span className="admin-dashboard-arrow">
+              →
+            </span>
           </a>
         </div>
       </div>

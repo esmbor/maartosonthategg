@@ -47,7 +47,7 @@ export default function PublicHeader({
             Recepten
           </Link>
 
-          <Link href="/#tips">
+          <Link href="/tips">
             Maarto&apos;s Tips
           </Link>
 

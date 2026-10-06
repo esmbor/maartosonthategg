@@ -51,6 +51,33 @@ export default async function Home() {
     );
   }
 
+  const {
+    data: featuredTips,
+    error: tipsError,
+  } = await supabase
+    .from("tips")
+    .select(`
+      id,
+      name,
+      slug,
+      type,
+      featured,
+      featured_order
+    `)
+    .eq("published", true)
+    .eq("featured", true)
+    .order("featured_order", {
+      ascending: true,
+    })
+    .limit(5);
+
+  if (tipsError) {
+    console.error(
+      "Error loading featured tips:",
+      tipsError
+    );
+  }
+
   const recipeIds =
     featuredRecipes?.map((recipe) => recipe.id) ?? [];
 
@@ -104,24 +131,6 @@ export default async function Home() {
       };
     }) ?? [];
 
-  const picks = [
-    {
-      number: "01",
-      name: "Favoriete kernthermometer",
-      type: "Gear",
-    },
-    {
-      number: "02",
-      name: "De rub die altijd in de kast staat",
-      type: "Kruiden",
-    },
-    {
-      number: "03",
-      name: "Rookhout voor low & slow",
-      type: "Fuel & Smoke",
-    },
-  ];
-
   return (
     <main>
       <PublicHeader absolute />
@@ -155,7 +164,7 @@ export default async function Home() {
               </Link>
 
               <a
-                href="#tips"
+                href="/tips"
                 className="text-link"
               >
                 Maarto&apos;s Tips
@@ -351,7 +360,7 @@ export default async function Home() {
               }}
             >
               <Link
-                href="/#tips"
+                href="/tips"
                 className="text-link"
               >
                 Bekijk alle tips
@@ -361,24 +370,30 @@ export default async function Home() {
           </div>
 
           <div className="picks-list">
-            {picks.map((pick) => (
-              <div
-                className="pick-item"
-                key={pick.number}
-              >
-                <div className="pick-number">
-                  {pick.number}
-                </div>
+            {(featuredTips ?? []).map(
+              (tip, index) => (
+                <Link
+                  href={`/tips/${tip.slug}`}
+                  className="pick-item"
+                  key={tip.id}
+                >
+                  <div className="pick-number">
+                    {String(index + 1).padStart(
+                      2,
+                      "0"
+                    )}
+                  </div>
 
-                <div className="pick-name">
-                  {pick.name}
-                </div>
+                  <div className="pick-name">
+                    {tip.name}
+                  </div>
 
-                <div className="pick-type">
-                  {pick.type}
-                </div>
-              </div>
-            ))}
+                  <div className="pick-type">
+                    {tip.type ?? "Pick"}
+                  </div>
+                </Link>
+              )
+            )}
           </div>
         </div>
       </section>

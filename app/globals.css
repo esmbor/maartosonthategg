@@ -789,7 +789,7 @@ button {
 
 .admin-dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
 
@@ -2506,6 +2506,199 @@ button {
 }
 
 /* ====================================================== */
+/* Tips overview                                          */
+/* ====================================================== */
+
+.tips-page,
+.tip-page {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.tips-overview-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 70px 0 80px;
+}
+
+.tips-overview-hero::after {
+  content: "PICKS";
+  position: absolute;
+  right: -30px;
+  bottom: -55px;
+  color: rgba(243, 230, 204, 0.025);
+  font-size: clamp(9rem, 21vw, 20rem);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.09em;
+  pointer-events: none;
+}
+
+.tips-overview-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.tips-overview-copy h1 {
+  margin: 16px 0 24px;
+  font-size: clamp(4.2rem, 7.2vw, 7.4rem);
+  line-height: 0.82;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+}
+
+.tips-overview-copy h1 span {
+  display: block;
+  color: var(--yellow);
+}
+
+.tips-overview-copy p {
+  max-width: 540px;
+  margin: 0;
+  color: var(--cream-soft);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.tips-overview-section {
+  position: relative;
+  z-index: 3;
+  margin-top: -20px;
+  padding: 65px 0 100px;
+  background: var(--cream);
+  color: var(--background);
+}
+
+.tips-overview-heading {
+  margin-bottom: 36px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.tips-overview-heading h2 {
+  margin: 10px 0 0;
+  font-size: clamp(3.2rem, 5vw, 5.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.tips-overview-heading > span {
+  color: #796857;
+  font-family: var(--font-geist-mono);
+  font-size: 0.72rem;
+}
+
+.tips-public-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.public-tip-card {
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff8ea;
+  border: 1px solid rgba(21, 16, 12, 0.09);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.public-tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 18px 40px rgba(21, 16, 12, 0.1);
+}
+
+.public-tip-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--background);
+}
+
+.public-tip-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.public-tip-card:hover
+  .public-tip-image img {
+  transform: scale(1.035);
+}
+
+.public-tip-content {
+  padding: 20px 21px 22px;
+}
+
+.public-tip-content h3 {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.2vw, 2.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.public-tip-content > p {
+  margin: 13px 0 0;
+  color: #665547;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+/* ====================================================== */
+/* Tip detail                                             */
+/* ====================================================== */
+
+.tip-detail-hero {
+  padding: 50px 0 110px;
+}
+
+.tip-detail-hero-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(420px, 0.92fr);
+  gap: 80px;
+  align-items: center;
+}
+
+.tip-main-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.28);
+}
+
+.tip-main-image > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.tip-hero-content h1 {
+  margin: 0;
+  max-width: 720px;
+  font-size: clamp(4rem, 6vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+
+/* ====================================================== */
 /* Responsive: medium                                     */
 /* ====================================================== */
 
@@ -2613,6 +2806,20 @@ button {
   .featured-available-grid {
     grid-template-columns:
     repeat(2, minmax(0, 1fr));
+  }
+
+  .tips-public-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .tip-detail-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  .tip-main-image {
+    max-width: 800px;
   }
 }
 
@@ -3070,5 +3277,44 @@ button {
 
   .featured-available-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tips-overview-hero {
+    padding: 58px 0 70px;
+  }
+
+  .tips-overview-copy h1 {
+    font-size: clamp(4rem, 19vw, 6.2rem);
+  }
+
+  .tips-overview-section {
+    margin-top: -10px;
+    padding: 65px 0 80px;
+  }
+
+  .tips-overview-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .tips-public-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tip-detail-hero {
+    padding: 35px 0 75px;
+  }
+
+  .tip-detail-hero-grid {
+    gap: 40px;
+  }
+
+  .tip-main-image {
+    border-radius: 18px;
+  }
+
+  .tip-hero-content h1 {
+    font-size: clamp(3.4rem, 16vw, 5.7rem);
   }
 }
