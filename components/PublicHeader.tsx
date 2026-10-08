@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,37 +13,38 @@ export default function PublicHeader({
     <header
       className={
         absolute
-          ? "header"
-          : "recipe-site-header"
+          ? "header header-absolute"
+          : "header header-static"
       }
+      style={{
+        position: absolute ? "absolute" : "relative",
+        top: absolute ? 0 : undefined,
+        left: absolute ? 0 : undefined,
+      }}
     >
       <div
-        className={
-          absolute
-            ? "site-shell header-inner"
-            : "site-shell recipe-header-inner"
-        }
+        className="header-inner"
+        style={{
+          width: "calc(100% - 64px)",
+          maxWidth: "none",
+          margin: "0 auto",
+        }}
       >
         <Link
           href="/"
           className="brand"
+          aria-label="Maarto's on that Egg"
         >
           <Image
             src="/images/logo-maarto.png"
             alt="Maarto's on that Egg"
-            width={78}
-            height={78}
+            width={76}
+            height={76}
             priority
           />
         </Link>
 
-        <nav
-          className={
-            absolute
-              ? "nav"
-              : "recipe-public-nav"
-          }
-        >
+        <nav className="nav">
           <Link href="/recepten">
             Recepten
           </Link>
