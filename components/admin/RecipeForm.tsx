@@ -1,60 +1,46 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { FormEvent, ReactNode, useState } from "react";
-
 type Ingredient = {
   amount: string;
   unit: string;
   ingredient: string;
 };
-
 type Step = {
   instruction: string;
 };
-
 export type RecipeFormInitialData = {
   id: string;
-
   title: string;
   slug: string;
   description: string | null;
-
+  card_intro: string | null;
   category: string | null;
   cooking_style: string | null;
   difficulty: string | null;
-
   servings: number | null;
-
   prep_time_minutes: number | null;
   cook_time_minutes: number | null;
-
   bbq_temperature_c: number | null;
   core_temperature_c: number | null;
-
   instagram_url: string | null;
   maarto_tip: string | null;
-
   featured: boolean;
   published: boolean;
-
   ingredients: {
     amount: number | null;
     unit: string | null;
     ingredient: string;
   }[];
-
   steps: {
     instruction: string;
   }[];
 };
-
 type RecipeFormProps = {
   initialData?: RecipeFormInitialData;
   imagesSection?: ReactNode;
 };
-
 function createSlug(value: string) {
   return value
     .toLowerCase()
@@ -63,84 +49,66 @@ function createSlug(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
-
 export default function RecipeForm({
   initialData,
   imagesSection,
 }: RecipeFormProps) {
   const router = useRouter();
-
   const isEditing = Boolean(initialData);
-
   const [title, setTitle] = useState(
     initialData?.title ?? ""
   );
-
   const [slug, setSlug] = useState(
     initialData?.slug ?? ""
   );
-
   /*
    * Bij een bestaand recept willen we de slug niet automatisch
    * veranderen als iemand alleen de titel aanpast.
    */
   const [slugEdited, setSlugEdited] =
     useState(isEditing);
-
+  const [cardIntro, setCardIntro] = useState(initialData?.card_intro ?? "");
   const [description, setDescription] = useState(
     initialData?.description ?? ""
   );
-
   const [category, setCategory] = useState(
     initialData?.category ?? ""
   );
-
   const [cookingStyle, setCookingStyle] = useState(
     initialData?.cooking_style ?? ""
   );
-
   const [difficulty, setDifficulty] = useState(
     initialData?.difficulty ?? ""
   );
-
   const [servings, setServings] = useState(
     initialData?.servings?.toString() ?? ""
   );
-
   const [prepTime, setPrepTime] = useState(
     initialData?.prep_time_minutes?.toString() ?? ""
   );
-
   const [cookTime, setCookTime] = useState(
     initialData?.cook_time_minutes?.toString() ?? ""
   );
-
   const [bbqTemperature, setBbqTemperature] =
     useState(
       initialData?.bbq_temperature_c?.toString() ?? ""
     );
-
   const [coreTemperature, setCoreTemperature] =
     useState(
       initialData?.core_temperature_c?.toString() ?? ""
     );
-
   const [instagramUrl, setInstagramUrl] = useState(
     initialData?.instagram_url ?? ""
   );
-
   const [maartoTip, setMaartoTip] = useState(
     initialData?.maarto_tip ?? ""
   );
-
   const [featured, setFeatured] = useState(
     initialData?.featured ?? false
   );
-
   const [published, setPublished] = useState(
     initialData?.published ?? false
   );
-
   const [ingredients, setIngredients] = useState<
     Ingredient[]
   >(
@@ -159,7 +127,6 @@ export default function RecipeForm({
           },
         ]
   );
-
   const [steps, setSteps] = useState<Step[]>(
     initialData?.steps.length
       ? initialData.steps.map((step) => ({
@@ -171,19 +138,15 @@ export default function RecipeForm({
           },
         ]
   );
-
   const [saving, setSaving] = useState(false);
   const [errorMessage, setErrorMessage] =
     useState("");
-
   function handleTitleChange(value: string) {
     setTitle(value);
-
     if (!slugEdited) {
       setSlug(createSlug(value));
     }
   }
-
   function updateIngredient(
     index: number,
     field: keyof Ingredient,
@@ -200,7 +163,6 @@ export default function RecipeForm({
       )
     );
   }
-
   function addIngredient() {
     setIngredients((current) => [
       ...current,
@@ -211,7 +173,6 @@ export default function RecipeForm({
       },
     ]);
   }
-
   function removeIngredient(index: number) {
     setIngredients((current) =>
       current.filter(
@@ -219,7 +180,6 @@ export default function RecipeForm({
       )
     );
   }
-
   function updateStep(
     index: number,
     value: string
@@ -234,7 +194,6 @@ export default function RecipeForm({
       )
     );
   }
-
   function addStep() {
     setSteps((current) => [
       ...current,
@@ -243,7 +202,6 @@ export default function RecipeForm({
       },
     ]);
   }
-
   function removeStep(index: number) {
     setSteps((current) =>
       current.filter(
@@ -251,22 +209,17 @@ export default function RecipeForm({
       )
     );
   }
-
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
-
     setSaving(true);
     setErrorMessage("");
-
     const supabase = createClient();
-
     const {
       data: { user },
       error: userError,
     } = await supabase.auth.getUser();
-
     if (userError || !user) {
       setErrorMessage(
         "Je sessie is verlopen. Log opnieuw in."
@@ -274,48 +227,36 @@ export default function RecipeForm({
       setSaving(false);
       return;
     }
-
     const recipePayload = {
       title,
       slug,
-
+      card_intro: cardIntro.trim() || null,
       description: description || null,
-
       category: category || null,
       cooking_style: cookingStyle || null,
       difficulty: difficulty || null,
-
       servings: servings
         ? Number(servings)
         : null,
-
       prep_time_minutes: prepTime
         ? Number(prepTime)
         : null,
-
       cook_time_minutes: cookTime
         ? Number(cookTime)
         : null,
-
       bbq_temperature_c: bbqTemperature
         ? Number(bbqTemperature)
         : null,
-
       core_temperature_c: coreTemperature
         ? Number(coreTemperature)
         : null,
-
       instagram_url: instagramUrl || null,
       maarto_tip: maartoTip || null,
-
       featured,
       published,
-
       updated_by: user.id,
     };
-
     let recipeId: string;
-
     /*
      * --------------------------------
      * UPDATE bestaand recept
@@ -329,20 +270,16 @@ export default function RecipeForm({
           .eq("id", initialData.id)
           .select("id")
           .single();
-
       if (recipeError || !recipe) {
         setErrorMessage(
           recipeError?.message ??
             "Het recept kon niet worden bijgewerkt."
         );
-
         setSaving(false);
         return;
       }
-
       recipeId = recipe.id;
     }
-
     /*
      * --------------------------------
      * INSERT nieuw recept
@@ -354,36 +291,29 @@ export default function RecipeForm({
           .from("recipes")
           .insert({
             ...recipePayload,
-
             created_by: user.id,
           })
           .select("id")
           .single();
-
       if (recipeError || !recipe) {
         setErrorMessage(
           recipeError?.message ??
             "Het recept kon niet worden opgeslagen."
         );
-
         setSaving(false);
         return;
       }
-
       recipeId = recipe.id;
     }
-
     /*
      * --------------------------------
      * Ingrediënten voorbereiden
      * --------------------------------
      */
-
     const validIngredients = ingredients.filter(
       (ingredient) =>
         ingredient.ingredient.trim() !== ""
     );
-
     /*
      * Bij bewerken vervangen we de bestaande lijst.
      */
@@ -393,17 +323,14 @@ export default function RecipeForm({
           .from("recipe_ingredients")
           .delete()
           .eq("recipe_id", recipeId);
-
       if (deleteIngredientsError) {
         setErrorMessage(
           `Bestaande ingrediënten konden niet worden bijgewerkt: ${deleteIngredientsError.message}`
         );
-
         setSaving(false);
         return;
       }
     }
-
     if (validIngredients.length > 0) {
       const { error: ingredientsError } =
         await supabase
@@ -412,7 +339,6 @@ export default function RecipeForm({
             validIngredients.map(
               (ingredient, index) => ({
                 recipe_id: recipeId,
-
                 amount: ingredient.amount
                   ? Number(
                       ingredient.amount.replace(
@@ -421,17 +347,13 @@ export default function RecipeForm({
                       )
                     )
                   : null,
-
                 unit: ingredient.unit || null,
-
                 ingredient:
                   ingredient.ingredient,
-
                 sort_order: index,
               })
             )
           );
-
       if (ingredientsError) {
         /*
          * Alleen bij een nieuw recept ruimen we
@@ -443,43 +365,35 @@ export default function RecipeForm({
             .delete()
             .eq("id", recipeId);
         }
-
         setErrorMessage(
           `Ingrediënten konden niet worden opgeslagen: ${ingredientsError.message}`
         );
-
         setSaving(false);
         return;
       }
     }
-
     /*
      * --------------------------------
      * Bereidingsstappen
      * --------------------------------
      */
-
     const validSteps = steps.filter(
       (step) => step.instruction.trim() !== ""
     );
-
     if (initialData) {
       const { error: deleteStepsError } =
         await supabase
           .from("recipe_steps")
           .delete()
           .eq("recipe_id", recipeId);
-
       if (deleteStepsError) {
         setErrorMessage(
           `Bestaande bereidingsstappen konden niet worden bijgewerkt: ${deleteStepsError.message}`
         );
-
         setSaving(false);
         return;
       }
     }
-
     if (validSteps.length > 0) {
       const { error: stepsError } =
         await supabase
@@ -491,7 +405,6 @@ export default function RecipeForm({
               instruction: step.instruction,
             }))
           );
-
       if (stepsError) {
         if (!initialData) {
           await supabase
@@ -499,16 +412,13 @@ export default function RecipeForm({
             .delete()
             .eq("id", recipeId);
         }
-
         setErrorMessage(
           `Bereidingsstappen konden niet worden opgeslagen: ${stepsError.message}`
         );
-
         setSaving(false);
         return;
       }
     }
-
     if (initialData) {
         router.push("/admin/recepten");
     } else {
@@ -518,7 +428,6 @@ export default function RecipeForm({
     }
         router.refresh();
   }
-
   return (
     <form
       className="recipe-admin-form"
@@ -527,11 +436,9 @@ export default function RecipeForm({
       {/* -------------------------- */}
       {/* 01 - Basis                */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>01</span>
-
           <div>
             <h2>De basis</h2>
             <p>
@@ -539,13 +446,11 @@ export default function RecipeForm({
             </p>
           </div>
         </div>
-
         <div className="admin-form-grid">
           <div className="admin-field admin-field-wide">
             <label htmlFor="title">
               Naam van het recept *
             </label>
-
             <input
               id="title"
               value={title}
@@ -558,13 +463,10 @@ export default function RecipeForm({
               required
             />
           </div>
-
           <div className="admin-field admin-field-wide">
             <label htmlFor="slug">URL *</label>
-
             <div className="admin-slug-field">
               <span>/recepten/</span>
-
               <input
                 id="slug"
                 value={slug}
@@ -578,28 +480,35 @@ export default function RecipeForm({
               />
             </div>
           </div>
-
+          <div className="admin-field admin-field-wide">
+            <label htmlFor="card_intro">Korte intro (overzichtstegel)</label>
+            <textarea
+              id="card_intro"
+              value={cardIntro}
+              onChange={(event) => setCardIntro(event.target.value)}
+              placeholder="Een korte, pakkende introductie van dit recept..."
+              rows={2}
+              maxLength={250}
+            />
+          </div>
           <div className="admin-field admin-field-wide">
             <label htmlFor="description">
-              Korte omschrijving
+              Beschrijving (detailpagina)
             </label>
-
             <textarea
               id="description"
               value={description}
               onChange={(event) =>
                 setDescription(event.target.value)
               }
-              placeholder="Een korte intro van deze cook..."
+              placeholder="De uitgebreide beschrijving van dit recept..."
               rows={4}
             />
           </div>
-
           <div className="admin-field">
             <label htmlFor="category">
               Categorie
             </label>
-
             <select
               id="category"
               value={category}
@@ -624,12 +533,10 @@ export default function RecipeForm({
               <option value="Pizza">Pizza</option>
             </select>
           </div>
-
           <div className="admin-field">
             <label htmlFor="cookingStyle">
               Bereidingsstijl
             </label>
-
             <select
               id="cookingStyle"
               value={cookingStyle}
@@ -665,12 +572,10 @@ export default function RecipeForm({
               </option>
             </select>
           </div>
-
           <div className="admin-field">
             <label htmlFor="difficulty">
               Moeilijkheid
             </label>
-
             <select
               id="difficulty"
               value={difficulty}
@@ -694,12 +599,10 @@ export default function RecipeForm({
               </option>
             </select>
           </div>
-
           <div className="admin-field">
             <label htmlFor="servings">
               Personen
             </label>
-
             <input
               id="servings"
               type="number"
@@ -713,27 +616,22 @@ export default function RecipeForm({
           </div>
         </div>
       </section>
-
       {/* -------------------------- */}
       {/* 02 - Fire control         */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>02</span>
-
           <div>
             <h2>Fire control</h2>
             <p>Tijden en temperaturen.</p>
           </div>
         </div>
-
         <div className="admin-form-grid admin-form-grid-four">
           <div className="admin-field">
             <label htmlFor="prepTime">
               Voorbereiding
             </label>
-
             <div className="admin-input-unit">
               <input
                 id="prepTime"
@@ -749,12 +647,10 @@ export default function RecipeForm({
               <span>min</span>
             </div>
           </div>
-
           <div className="admin-field">
             <label htmlFor="cookTime">
               Bereiding
             </label>
-
             <div className="admin-input-unit">
               <input
                 id="cookTime"
@@ -770,12 +666,10 @@ export default function RecipeForm({
               <span>min</span>
             </div>
           </div>
-
           <div className="admin-field">
             <label htmlFor="bbqTemperature">
               BBQ temperatuur
             </label>
-
             <div className="admin-input-unit">
               <input
                 id="bbqTemperature"
@@ -790,12 +684,10 @@ export default function RecipeForm({
               <span>°C</span>
             </div>
           </div>
-
           <div className="admin-field">
             <label htmlFor="coreTemperature">
               Kerntemperatuur
             </label>
-
             <div className="admin-input-unit">
               <input
                 id="coreTemperature"
@@ -812,15 +704,12 @@ export default function RecipeForm({
           </div>
         </div>
       </section>
-
       {/* -------------------------- */}
       {/* 03 - Ingrediënten         */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>03</span>
-
           <div>
             <h2>Ingrediënten</h2>
             <p>
@@ -829,7 +718,6 @@ export default function RecipeForm({
             </p>
           </div>
         </div>
-
         <div className="admin-repeat-list">
           {ingredients.map(
             (ingredient, index) => (
@@ -839,7 +727,6 @@ export default function RecipeForm({
               >
                 <div className="admin-field">
                   <label>Hoeveelheid</label>
-
                   <input
                     value={ingredient.amount}
                     onChange={(event) =>
@@ -852,10 +739,8 @@ export default function RecipeForm({
                     placeholder="500"
                   />
                 </div>
-
                 <div className="admin-field">
                   <label>Eenheid</label>
-
                   <input
                     value={ingredient.unit}
                     onChange={(event) =>
@@ -868,10 +753,8 @@ export default function RecipeForm({
                     placeholder="g"
                   />
                 </div>
-
                 <div className="admin-field admin-ingredient-name">
                   <label>Ingrediënt</label>
-
                   <input
                     value={
                       ingredient.ingredient
@@ -886,7 +769,6 @@ export default function RecipeForm({
                     placeholder="Procureur"
                   />
                 </div>
-
                 {ingredients.length > 1 && (
                   <button
                     type="button"
@@ -903,7 +785,6 @@ export default function RecipeForm({
             )
           )}
         </div>
-
         <button
           type="button"
           className="admin-secondary-button"
@@ -912,15 +793,12 @@ export default function RecipeForm({
           + Ingrediënt toevoegen
         </button>
       </section>
-
       {/* -------------------------- */}
       {/* 04 - Stappen              */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>04</span>
-
           <div>
             <h2>Aan de slag</h2>
             <p>
@@ -928,7 +806,6 @@ export default function RecipeForm({
             </p>
           </div>
         </div>
-
         <div className="admin-repeat-list">
           {steps.map((step, index) => (
             <div
@@ -941,10 +818,8 @@ export default function RecipeForm({
                   "0"
                 )}
               </div>
-
               <div className="admin-field admin-step-field">
                 <label>Bereidingsstap</label>
-
                 <textarea
                   value={step.instruction}
                   onChange={(event) =>
@@ -957,7 +832,6 @@ export default function RecipeForm({
                   rows={4}
                 />
               </div>
-
               {steps.length > 1 && (
                 <button
                   type="button"
@@ -973,7 +847,6 @@ export default function RecipeForm({
             </div>
           ))}
         </div>
-
         <button
           type="button"
           className="admin-secondary-button"
@@ -982,29 +855,24 @@ export default function RecipeForm({
           + Stap toevoegen
         </button>
       </section>
-
       {/* -------------------------- */}
       {/* 05 - Extra                */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>05</span>
-
           <div>
             <h2>The good stuff</h2>
             <p>
-              Persoonlijke tips en extra&apos;s.
+              Persoonlijke tips en extra's.
             </p>
           </div>
         </div>
-
         <div className="admin-form-grid">
           <div className="admin-field admin-field-wide">
             <label htmlFor="maartoTip">
-              Maarto&apos;s Tip
+              Maarto's Tip
             </label>
-
             <textarea
               id="maartoTip"
               value={maartoTip}
@@ -1015,12 +883,10 @@ export default function RecipeForm({
               rows={4}
             />
           </div>
-
           <div className="admin-field admin-field-wide">
             <label htmlFor="instagramUrl">
               Instagram-link
             </label>
-
             <input
               id="instagramUrl"
               type="url"
@@ -1035,15 +901,12 @@ export default function RecipeForm({
           </div>
         </div>
       </section>
-
       {/* -------------------------- */}
       {/* 06 - Publicatie           */}
       {/* -------------------------- */}
-
       <section className="admin-form-section">
         <div className="admin-form-section-heading">
           <span>06</span>
-
           <div>
             <h2>Ready to serve?</h2>
             <p>
@@ -1051,7 +914,6 @@ export default function RecipeForm({
             </p>
           </div>
         </div>
-
         <div className="admin-toggle-list">
           <label className="admin-checkbox">
             <input
@@ -1063,7 +925,6 @@ export default function RecipeForm({
                 )
               }
             />
-
             <span>
               <strong>Uitlichten</strong>
               <small>
@@ -1072,7 +933,6 @@ export default function RecipeForm({
               </small>
             </span>
           </label>
-
           <label className="admin-checkbox">
             <input
               type="checkbox"
@@ -1083,7 +943,6 @@ export default function RecipeForm({
                 )
               }
             />
-
             <span>
               <strong>Publiceren</strong>
               <small>
@@ -1094,15 +953,12 @@ export default function RecipeForm({
           </label>
         </div>
       </section>
-
       {imagesSection}
-
       {errorMessage && (
         <div className="admin-form-error">
           {errorMessage}
         </div>
       )}
-
       <div className="admin-form-actions">
         <button
           type="submit"
@@ -1117,7 +973,6 @@ export default function RecipeForm({
                 ? "Recept publiceren"
                 : "Concept opslaan"}
         </button>
-
         <button
           type="button"
           className="admin-secondary-button"
@@ -1128,8 +983,6 @@ export default function RecipeForm({
         >
           Annuleren
         </button>
-
-        
       </div>
     </form>
   );

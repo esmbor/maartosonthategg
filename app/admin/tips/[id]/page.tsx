@@ -55,6 +55,7 @@ export default async function EditTipPage({
       slug,
       type,
       description,
+      card_intro,
       external_url,
       featured,
       published
@@ -87,6 +88,9 @@ export default async function EditTipPage({
 
     description:
       tip.description,
+
+    card_intro:
+      tip.card_intro,
 
     external_url:
       tip.external_url,

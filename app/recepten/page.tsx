@@ -30,7 +30,7 @@ export default async function RecipesPage() {
       id,
       title,
       slug,
-      description,
+      card_intro,
       category,
       cooking_style,
       difficulty,
@@ -225,9 +225,9 @@ export default async function RecipesPage() {
                         {recipe.title}
                       </h3>
 
-                      {recipe.description && (
+                      {recipe.card_intro && (
                         <p>
-                          {recipe.description}
+                          {recipe.card_intro}
                         </p>
                       )}
 

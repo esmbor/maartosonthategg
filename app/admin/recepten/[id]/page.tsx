@@ -50,6 +50,7 @@ export default async function EditRecipePage({
       title,
       slug,
       description,
+      card_intro,
       category,
       cooking_style,
       difficulty,
@@ -141,6 +142,9 @@ export default async function EditRecipePage({
 
       description:
         recipe.description,
+
+      card_intro:
+        recipe.card_intro,
 
       category:
         recipe.category,

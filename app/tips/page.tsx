@@ -14,7 +14,7 @@ export default async function TipsPage() {
       name,
       slug,
       type,
-      description,
+      card_intro,
       featured,
       created_at
     `)
@@ -190,9 +190,9 @@ export default async function TipsPage() {
                         {tip.name}
                       </h3>
 
-                      {tip.description && (
+                      {tip.card_intro && (
                         <p>
-                          {tip.description}
+                          {tip.card_intro}
                         </p>
                       )}
 
