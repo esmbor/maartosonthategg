@@ -1,0 +1,436 @@
+
+/* ====================================================== */
+/* About Maarto — Page                                    */
+/* ====================================================== */
+
+.page {
+  min-height: 100vh;
+  background: #15100c;
+  color: #f3e6cc;
+}
+
+.shell {
+  width: min(1440px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: #e96516;
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* ====================================================== */
+/* Hero                                                   */
+/* ====================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 95px 0 130px;
+  background: #15100c;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -220px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(233, 101, 22, 0.1) 0%,
+    rgba(233, 101, 22, 0.025) 50%,
+    transparent 73%
+  );
+  pointer-events: none;
+}
+
+.heroGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(45px, 7vw, 110px);
+}
+
+.heroContent {
+  padding: 25px 0;
+  min-width: 0;
+}
+
+.heroTitle {
+  margin: 22px 0 30px;
+  max-width: 760px;
+  font-size: clamp(4rem, 7vw, 8rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.titleDot {
+  color: #fdb548;
+}
+
+.heroIntro {
+  max-width: 610px;
+  margin: 0;
+  color: #d5c5a9;
+  font-size: clamp(1.05rem, 1.65vw, 1.3rem);
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.heroSignature {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-top: 50px;
+  color: #a9977c;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.signatureLine {
+  display: block;
+  width: 45px;
+  height: 2px;
+  background: #e96516;
+}
+
+/* ====================================================== */
+/* Hero photo                                             */
+/* ====================================================== */
+
+.heroVisual {
+  position: relative;
+  min-width: 0;
+  padding: 0 15px 30px 0;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(243, 230, 204, 0.12);
+  background: #241a13;
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.35);
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 9, 5, 0.25),
+    transparent 42%
+  );
+  pointer-events: none;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  border: 1px solid rgba(243, 230, 204, 0.12);
+  border-radius: 24px;
+  background: #241a13;
+  color: #a9977c;
+  text-align: center;
+}
+
+.imagePlaceholder span {
+  font-size: 4rem;
+}
+
+.imagePlaceholder p {
+  padding: 0 20px;
+  line-height: 1.6;
+}
+
+.imageLabel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 22px;
+  border-radius: 12px;
+  background: #fdb548;
+  color: #15100c;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.imageLabel span {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+}
+
+/* ====================================================== */
+/* The story                                              */
+/* ====================================================== */
+
+.storySection {
+  padding: 125px 0 145px;
+  background: #f3e6cc;
+  color: #15100c;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(50px, 9vw, 150px);
+  align-items: start;
+}
+
+.storyHeading h2 {
+  margin: 20px 0 0;
+  font-size: clamp(3.5rem, 6vw, 6.8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.storyHeading h2 span {
+  color: #e96516;
+}
+
+.storyContent {
+  max-width: 760px;
+  padding-top: 15px;
+}
+
+.storyContent p {
+  margin: 0 0 28px;
+  color: #4d4035;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  white-space: pre-line;
+}
+
+.storyContent p:first-child {
+  color: #15100c;
+  font-size: 1.3rem;
+  font-weight: 650;
+  line-height: 1.7;
+}
+
+.storyContent p:last-child {
+  margin-bottom: 0;
+}
+
+/* ====================================================== */
+/* Closing section                                        */
+/* ====================================================== */
+
+.closingSection {
+  position: relative;
+  overflow: hidden;
+  padding: 130px 0 150px;
+  background: #334633;
+  text-align: center;
+}
+
+.closingSection::after {
+  content: "FIRE";
+  position: absolute;
+  right: 15px;
+  bottom: -5px;
+  color: rgba(243, 230, 204, 0.04);
+  font-size: clamp(5rem, 13vw, 12rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+}
+
+.closingContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.closingContent h2 {
+  margin: 20px 0 24px;
+  max-width: 1050px;
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.closingContent h2 span {
+  display: block;
+  color: #fdb548;
+}
+
+.closingContent p {
+  max-width: 550px;
+  margin: 0;
+  color: #d8d9c5;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 56px;
+  margin-top: 35px;
+  padding: 0 28px;
+  border-radius: 12px;
+  background: #e96516;
+  color: #15100c;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.ctaButton:hover {
+  background: #fdb548;
+  transform: translateY(-3px);
+}
+
+.ctaButton span {
+  font-size: 1.3rem;
+}
+
+/* ====================================================== */
+/* Responsive                                             */
+/* ====================================================== */
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 65px 0 95px;
+  }
+
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .heroContent {
+    padding: 0;
+  }
+
+  .heroTitle {
+    max-width: 100%;
+  }
+
+  .heroVisual {
+    width: min(600px, 100%);
+    margin: 0 auto;
+  }
+
+  .storyGrid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .storySection {
+    padding: 95px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    width: calc(100% - 32px);
+  }
+
+  .hero {
+    padding: 48px 0 80px;
+  }
+
+  .heroTitle {
+    margin-top: 18px;
+    font-size: clamp(3.3rem, 13vw, 5rem);
+  }
+
+  .heroIntro {
+    font-size: 1rem;
+  }
+
+  .heroSignature {
+    margin-top: 35px;
+    font-size: 0.62rem;
+  }
+
+  .heroVisual {
+    padding: 0 10px 20px 0;
+  }
+
+  .imageFrame,
+  .imagePlaceholder {
+    border-radius: 16px;
+  }
+
+  .imageLabel {
+    padding: 13px 15px;
+    font-size: 0.65rem;
+  }
+
+  .storySection {
+    padding: 75px 0 85px;
+  }
+
+  .storyHeading h2 {
+    font-size: clamp(3rem, 12vw, 4.8rem);
+  }
+
+  .storyContent p {
+    font-size: 1rem;
+  }
+
+  .storyContent p:first-child {
+    font-size: 1.13rem;
+  }
+
+  .closingSection {
+    padding: 90px 0 105px;
+  }
+
+  .closingContent h2 {
+    font-size: clamp(2.7rem, 10vw, 4.4rem);
+  }
+
+  .closingContent p {
+    font-size: 0.95rem;
+  }
+}

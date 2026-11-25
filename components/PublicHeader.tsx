@@ -53,7 +53,7 @@ export default function PublicHeader({
             Maarto&apos;s Tips
           </Link>
 
-          <Link href="/#over-maarto">
+          <Link href="/over-maarto">
             Over Maarto
           </Link>
         </nav>

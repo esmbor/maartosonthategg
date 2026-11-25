@@ -1,0 +1,280 @@
+
+.page {
+  min-height: 100vh;
+  padding: 60px 0 100px;
+  background: #15100c;
+  color: #f3e6cc;
+}
+
+.shell {
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 55px;
+  color: #d5c5a9;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.backLink:hover {
+  color: #fdb548;
+}
+
+.heading {
+  margin-bottom: 55px;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+  color: #e96516;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.heading h1 {
+  margin: 0 0 22px;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+
+.heading h1 span {
+  color: #fdb548;
+}
+
+.heading p {
+  margin: 0;
+  color: #d5c5a9;
+  line-height: 1.7;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section {
+  padding: 36px;
+  border: 1px solid rgba(243, 230, 204, 0.14);
+  border-radius: 18px;
+  background: #1d1510;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.sectionHeading span {
+  color: #fdb548;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.field label {
+  color: #d5c5a9;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.field input:not([type="file"]),
+.field textarea {
+  width: 100%;
+  padding: 15px 16px;
+  border: 1px solid rgba(243, 230, 204, 0.14);
+  border-radius: 10px;
+  outline: none;
+  background: #15100c;
+  color: #f3e6cc;
+  line-height: 1.6;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #e96516;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input[type="file"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px dashed rgba(243, 230, 204, 0.25);
+  border-radius: 10px;
+  color: #d5c5a9;
+}
+
+.field input[type="file"]::file-selector-button {
+  margin-right: 16px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #334633;
+  color: #f3e6cc;
+  cursor: pointer;
+}
+
+.help {
+  margin: 0;
+  color: #a9977c;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.imagePreview {
+  max-width: 560px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #15100c;
+}
+
+.imagePreview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+}
+
+.selectedFile {
+  padding: 16px;
+  border: 1px solid rgba(253, 181, 72, 0.25);
+  border-radius: 10px;
+  color: #d5c5a9;
+}
+
+.removeButton {
+  margin-top: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ff8a65;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.publishRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.publishRow input {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  accent-color: #e96516;
+}
+
+.publishRow span {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.publishRow strong {
+  font-size: 0.95rem;
+}
+
+.publishRow small {
+  color: #a9977c;
+  line-height: 1.6;
+}
+
+.error,
+.success {
+  padding: 17px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.error {
+  background: rgba(255, 110, 90, 0.1);
+  color: #ff9d84;
+}
+
+.success {
+  background: rgba(75, 96, 74, 0.3);
+  color: #dbe7d4;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.saveButton {
+  min-height: 52px;
+  padding: 0 26px;
+  border: none;
+  border-radius: 12px;
+  background: #e96516;
+  color: #15100c;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  background: #fdb548;
+}
+
+.saveButton:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 36px 0 70px;
+  }
+
+  .shell {
+    width: min(100% - 32px, 1080px);
+  }
+
+  .section {
+    padding: 22px;
+  }
+
+  .heading {
+    margin-bottom: 35px;
+  }
+
+  .saveButton {
+    width: 100%;
+  }
+}

@@ -1,3 +1,4 @@
+
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/admin/LogoutButton";
@@ -76,9 +77,7 @@ export default async function AdminPage() {
                 Recipes
               </span>
 
-              <h2>
-                Recepten
-              </h2>
+              <h2>Recepten</h2>
 
               <p>
                 Recepten toevoegen, aanpassen
@@ -104,9 +103,7 @@ export default async function AdminPage() {
                 Maarto&apos;s Picks
               </span>
 
-              <h2>
-                Tips
-              </h2>
+              <h2>Tips</h2>
 
               <p>
                 Gear, kruiden, sauzen en andere
@@ -132,9 +129,7 @@ export default async function AdminPage() {
                 Homepage · Recipes
               </span>
 
-              <h2>
-                Uitgelichte recepten
-              </h2>
+              <h2>Uitgelichte recepten</h2>
 
               <p>
                 Beheer de drie recepten in
@@ -160,13 +155,37 @@ export default async function AdminPage() {
                 Homepage · Picks
               </span>
 
-              <h2>
-                Uitgelichte tips
-              </h2>
+              <h2>Uitgelichte tips</h2>
 
               <p>
                 Beheer de vijf favorieten in
                 Maarto&apos;s Picks.
+              </p>
+            </div>
+
+            <span className="admin-dashboard-arrow">
+              →
+            </span>
+          </a>
+
+          <a
+            href="/admin/about"
+            className="admin-dashboard-card"
+          >
+            <span className="admin-dashboard-number">
+              05
+            </span>
+
+            <div>
+              <span className="admin-dashboard-eyebrow">
+                About · The Story
+              </span>
+
+              <h2>Over Maarto</h2>
+
+              <p>
+                Beheer het verhaal, de introductie
+                en de foto&apos;s van Maarto.
               </p>
             </div>
 
