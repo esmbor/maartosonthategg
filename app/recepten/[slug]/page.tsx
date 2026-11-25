@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicHeader from "@/components/PublicHeader";
+import PublicFooter from "@/components/PublicFooter";
+import { RecipeInstagramSection } from "@/components/InstagramBlocks";
+import RecipeInstagramButton from "@/components/RecipeInstagramButton";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -271,6 +274,10 @@ export default async function RecipePage({
                   }
                 />
               </div>
+
+              <RecipeInstagramButton
+                instagramUrl={recipe.instagram_url}
+              />
             </div>
           </div>
         </div>
@@ -443,50 +450,10 @@ export default async function RecipePage({
       )}
 
       {/* -------------------------- */}
-      {/* Instagram                  */}
-      {/* -------------------------- */}
-
-      {recipe.instagram_url && (
-        <section className="recipe-instagram-section">
-          <div className="site-shell recipe-instagram-inner">
-            <div>
-              <div className="section-eyebrow">
-                From the feed
-              </div>
-
-              <h2>
-                Seen it on
-                <span>Instagram?</span>
-              </h2>
-            </div>
-
-            <a
-              href={recipe.instagram_url}
-              target="_blank"
-              rel="noreferrer"
-              className="primary-button"
-            >
-              Bekijk de post →
-            </a>
-          </div>
-        </section>
-      )}
-
-      {/* -------------------------- */}
       {/* Footer                     */}
       {/* -------------------------- */}
 
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>
-            Fire. Food. Patience.
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
   );
 }

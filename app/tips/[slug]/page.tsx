@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 
 import PublicHeader from "@/components/PublicHeader";
 import { createClient } from "@/lib/supabase/server";
+import PublicFooter from "@/components/PublicFooter";
+
 
 type PageProps = {
   params: Promise<{
@@ -227,17 +229,7 @@ export default async function TipPage({
         </section>
       )}
 
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>
-            Fire. Food. Patience.
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
   );
 }

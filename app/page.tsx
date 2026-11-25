@@ -1,7 +1,10 @@
+
 import Image from "next/image";
 import Link from "next/link";
 
 import PublicHeader from "@/components/PublicHeader";
+import PublicFooter from "@/components/PublicFooter";
+import { HomeInstagramTeaser } from "@/components/InstagramBlocks";
 import { createClient } from "@/lib/supabase/server";
 
 function formatMinutes(minutes: number | null) {
@@ -112,8 +115,7 @@ export default async function Home() {
   const recipes =
     featuredRecipes?.map((recipe) => {
       const image = recipeImages.find(
-        (item) =>
-          item.recipe_id === recipe.id
+        (item) => item.recipe_id === recipe.id
       );
 
       const imageUrl = image
@@ -326,6 +328,10 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* INSTAGRAM — FOLLOW THE FIRE */}
+
+      <HomeInstagramTeaser />
+
       {/* MAARTO'S PICKS */}
 
       <section
@@ -398,7 +404,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* OVER MAARTO PLACEHOLDER */}
+      {/* OVER MAARTO */}
 
       <section
         id="over-maarto"
@@ -427,26 +433,27 @@ export default async function Home() {
               marginTop: "24px",
             }}
           >
-            Binnenkort meer over de man achter
-            het vuur, de cooks en de lichte
-            obsessie met alles wat op de Egg kan.
+            Achter iedere goede cook zit een
+            verhaal. Lees meer over de man achter
+            het vuur, de Egg en de liefde voor
+            alles wat van de grill komt.
           </p>
+
+          <div style={{ marginTop: "28px" }}>
+            <Link
+              href="/over-maarto"
+              className="text-link"
+            >
+              Lees mijn verhaal
+              <span>→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* SHARED FOOTER */}
 
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>
-            Fire. Food. Patience.
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
   );
 }

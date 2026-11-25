@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import PublicHeader from "@/components/PublicHeader";
 import { createClient } from "@/lib/supabase/server";
+import PublicFooter from "@/components/PublicFooter";
+
 
 export default async function TipsPage() {
   const supabase = await createClient();
@@ -209,17 +211,7 @@ export default async function TipsPage() {
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>
-            Fire. Food. Patience.
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
   );
 }

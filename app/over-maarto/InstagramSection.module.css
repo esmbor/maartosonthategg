@@ -1,0 +1,142 @@
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 115px 0 125px;
+  background: #1d1510;
+  color: #f3e6cc;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: -220px;
+  right: -180px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(233, 101, 22, 0.13),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(253, 181, 72, 0.3);
+  border-radius: 20px;
+  background: rgba(253, 181, 72, 0.08);
+  color: #fdb548;
+}
+
+.icon svg {
+  width: 35px;
+  height: 35px;
+}
+
+.eyebrow {
+  color: #e96516;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.title {
+  margin: 20px 0 26px;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.title span {
+  display: block;
+  color: #fdb548;
+}
+
+.description {
+  max-width: 650px;
+  margin: 0;
+  color: #d5c5a9;
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 58px;
+  margin-top: 38px;
+  padding: 0 28px;
+  border-radius: 12px;
+  background: #e96516;
+  color: #15100c;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.button:hover {
+  background: #fdb548;
+  transform: translateY(-3px);
+}
+
+.button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.button span {
+  font-size: 1.3rem;
+}
+
+.handle {
+  margin-top: 20px;
+  color: #a9977c;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 80px 0 90px;
+  }
+
+  .title {
+    font-size: clamp(3rem, 11vw, 4.5rem);
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .button {
+    width: 100%;
+    gap: 10px;
+    padding: 0 15px;
+    font-size: 0.68rem;
+  }
+}

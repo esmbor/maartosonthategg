@@ -4,8 +4,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import PublicHeader from "@/components/PublicHeader";
+import PublicFooter from "@/components/PublicFooter";
 import { createClient } from "@/lib/supabase/server";
 import styles from "./AboutPage.module.css";
+import instagramStyles from "./InstagramSection.module.css";
+
+const INSTAGRAM_URL =
+  "https://www.instagram.com/maartos_onthat_egg/";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +34,9 @@ export default async function AboutPage() {
 
   if (error) {
     console.error("Error loading About page:", error);
-    throw new Error("De Over Maarto-pagina kon niet worden geladen.");
+    throw new Error(
+      "De Over Maarto-pagina kon niet worden geladen."
+    );
   }
 
   if (!about) {
@@ -140,6 +147,53 @@ export default async function AboutPage() {
         </section>
       )}
 
+      {/* Instagram */}
+
+      <section className={instagramStyles.section}>
+        <div className={styles.shell}>
+          <div className={instagramStyles.content}>
+            <div className={instagramStyles.icon}>
+              <InstagramIcon />
+            </div>
+
+            <div className={instagramStyles.eyebrow}>
+              FROM THE FEED
+            </div>
+
+            <h2 className={instagramStyles.title}>
+              FOLLOW
+              <span>THE FIRE.</span>
+            </h2>
+
+            <p className={instagramStyles.description}>
+              Maarto&apos;s on that Egg begon op Instagram.
+              Daar deel ik nog steeds mijn BBQ-avonturen,
+              extra foto&apos;s, video&apos;s en alles wat er
+              op de Egg gebeurt.
+              <br />
+              <br />
+              Zin in meer? Volg me daar!
+            </p>
+
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={instagramStyles.button}
+              aria-label="Volg Maarto op Instagram"
+            >
+              <InstagramIcon />
+              VOLG MIJ OP INSTAGRAM
+              <span>↗</span>
+            </a>
+
+            <div className={instagramStyles.handle}>
+              @maartos_onthat_egg
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Closing */}
 
       <section className={styles.closingSection}>
@@ -170,17 +224,39 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
-
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>Fire. Food. Patience.</div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect
+        x="2"
+        y="2"
+        width="20"
+        height="20"
+        rx="5"
+      />
+      <circle cx="12" cy="12" r="4" />
+      <circle
+        cx="17.5"
+        cy="6.5"
+        r="1"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
   );
 }

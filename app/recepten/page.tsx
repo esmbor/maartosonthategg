@@ -2,6 +2,8 @@
 import PublicHeader from "@/components/PublicHeader";
 import RecipeFilters from "@/components/RecipeFilters";
 import { createClient } from "@/lib/supabase/server";
+import PublicFooter from "@/components/PublicFooter";
+
 
 export default async function RecipesPage() {
   const supabase = await createClient();
@@ -141,15 +143,7 @@ export default async function RecipesPage() {
 
       {/* Footer */}
 
-      <footer className="footer">
-        <div className="site-shell footer-inner">
-          <div className="footer-brand">
-            Maarto&apos;s on that Egg
-          </div>
-
-          <div>Fire. Food. Patience.</div>
-        </div>
-      </footer>
+      <PublicFooter />
     </main>
   );
 }
