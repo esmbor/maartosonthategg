@@ -1,0 +1,289 @@
+
+/* ====================================================== */
+/* Recipe search and filters                              */
+/* ====================================================== */
+
+.filterPanel {
+  margin-bottom: 36px;
+  padding: 26px;
+
+  border: 1px solid rgba(21, 16, 12, 0.12);
+  border-radius: 18px;
+
+  background: #fff8ea;
+}
+
+/* Search + cooking style */
+
+.searchRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 18px;
+  align-items: end;
+}
+
+.searchField {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  height: 54px;
+  min-width: 0;
+
+  border: 1px solid rgba(21, 16, 12, 0.18);
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #796857;
+
+  transition: border-color 180ms ease;
+}
+
+.searchField:focus-within {
+  border-color: #e96516;
+}
+
+.searchField svg {
+  flex-shrink: 0;
+  margin-left: 17px;
+}
+
+.searchField input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  padding: 0 15px;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #15100c;
+  font-size: 0.95rem;
+}
+
+.searchField input::placeholder {
+  color: #9b8c7d;
+}
+
+.styleField {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.styleField label {
+  color: #796857;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.styleField select {
+  width: 100%;
+  height: 54px;
+
+  padding: 0 15px;
+
+  border: 1px solid rgba(21, 16, 12, 0.18);
+  border-radius: 12px;
+
+  outline: none;
+  background: #ffffff;
+  color: #15100c;
+
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.styleField select:focus {
+  border-color: #e96516;
+}
+
+/* Category buttons */
+
+.categoryRow {
+  margin-top: 22px;
+}
+
+.categoryButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.categoryButton {
+  min-height: 39px;
+  padding: 0 16px;
+
+  border: 1px solid rgba(21, 16, 12, 0.16);
+  border-radius: 999px;
+
+  background: transparent;
+  color: #665547;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.categoryButton:hover {
+  border-color: #e96516;
+  color: #15100c;
+}
+
+.categoryButtonActive {
+  border-color: #15100c;
+  background: #15100c;
+  color: #f3e6cc;
+}
+
+.categoryButtonActive:hover {
+  border-color: #15100c;
+  color: #f3e6cc;
+}
+
+/* Result counter and reset */
+
+.filterFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 24px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(21, 16, 12, 0.09);
+}
+
+.resultCount {
+  color: #796857;
+  font-size: 0.78rem;
+}
+
+.resultCount strong {
+  color: #15100c;
+  font-weight: 900;
+}
+
+.resetButton {
+  padding: 5px 0;
+  border: none;
+  background: transparent;
+
+  color: #b9480b;
+
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  text-decoration: underline;
+}
+
+/* Empty results */
+
+.noResults {
+  padding: 85px 20px;
+  text-align: center;
+}
+
+.noResults > div {
+  margin-bottom: 15px;
+  font-size: 2.5rem;
+}
+
+.noResults h3 {
+  margin: 0 0 12px;
+
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.noResults p {
+  margin: 0 0 25px;
+  color: #796857;
+}
+
+.resetResultsButton {
+  min-height: 44px;
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #e96516;
+  color: #15100c;
+
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.resetResultsButton:hover {
+  background: #fdb548;
+}
+
+/* ====================================================== */
+/* Responsive                                             */
+/* ====================================================== */
+
+@media (max-width: 800px) {
+  .searchRow {
+    grid-template-columns: 1fr;
+  }
+
+  .styleField {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .filterPanel {
+    padding: 18px;
+    margin-bottom: 28px;
+  }
+
+  .searchField,
+  .styleField select {
+    height: 50px;
+  }
+
+  .categoryButtons {
+    gap: 7px;
+  }
+
+  .categoryButton {
+    min-height: 36px;
+    padding: 0 13px;
+    font-size: 0.66rem;
+  }
+
+  .filterFooter {
+    margin-top: 20px;
+  }
+
+  .noResults {
+    padding: 65px 15px;
+  }
+}

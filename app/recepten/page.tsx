@@ -1,25 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+
 import PublicHeader from "@/components/PublicHeader";
-
+import RecipeFilters from "@/components/RecipeFilters";
 import { createClient } from "@/lib/supabase/server";
-
-function formatMinutes(minutes: number | null) {
-  if (!minutes) return "—";
-
-  if (minutes < 60) {
-    return `${minutes} min`;
-  }
-
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  if (remainingMinutes === 0) {
-    return `${hours} u`;
-  }
-
-  return `${hours} u ${remainingMinutes} min`;
-}
 
 export default async function RecipesPage() {
   const supabase = await createClient();
@@ -100,8 +82,7 @@ export default async function RecipesPage() {
       return {
         ...recipe,
         imageUrl,
-        imageAlt:
-          image?.alt_text ?? recipe.title,
+        imageAlt: image?.alt_text ?? recipe.title,
       };
     }) ?? [];
 
@@ -145,127 +126,20 @@ export default async function RecipesPage() {
                 What&apos;s on the Egg?
               </div>
 
-              <h2>
-                Alle recepten.
-              </h2>
+              <h2>Alle recepten.</h2>
             </div>
 
             <span>
-              {String(
-                recipesWithImages.length
-              ).padStart(2, "0")}{" "}
+              {String(recipesWithImages.length).padStart(2, "0")}{" "}
               cooks
             </span>
           </div>
 
-          {recipesWithImages.length === 0 ? (
-            <div className="recipes-empty-state">
-              <div>🔥</div>
-
-              <h3>
-                Nog niks op de Egg.
-              </h3>
-
-              <p>
-                De eerste cook moet nog gepubliceerd worden.
-              </p>
-            </div>
-          ) : (
-            <div className="recipes-public-grid">
-              {recipesWithImages.map(
-                (recipe, index) => (
-                  <Link
-                    href={`/recepten/${recipe.slug}`}
-                    className="public-recipe-card"
-                    key={recipe.id}
-                  >
-                    <div className="public-recipe-image">
-                      {recipe.imageUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={recipe.imageUrl}
-                          alt={recipe.imageAlt}
-                        />
-                      ) : (
-                        <div className="public-recipe-image-placeholder">
-                          🔥
-                        </div>
-                      )}
-
-                      {recipe.featured && (
-                        <div className="public-recipe-featured">
-                          Maarto&apos;s pick
-                        </div>
-                      )}
-
-                      <div className="public-recipe-number">
-                        {String(index + 1).padStart(
-                          2,
-                          "0"
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="public-recipe-content">
-                      <div className="public-recipe-tags">
-                        {recipe.category && (
-                          <span>
-                            {recipe.category}
-                          </span>
-                        )}
-
-                        {recipe.cooking_style && (
-                          <span>
-                            {recipe.cooking_style}
-                          </span>
-                        )}
-                      </div>
-
-                      <h3>
-                        {recipe.title}
-                      </h3>
-
-                      {recipe.card_intro && (
-                        <p>
-                          {recipe.card_intro}
-                        </p>
-                      )}
-
-                      <div className="public-recipe-meta">
-                        <span>
-                          {formatMinutes(
-                            recipe.cook_time_minutes
-                          )}
-                        </span>
-
-                        {recipe.bbq_temperature_c && (
-                          <span>
-                            {
-                              recipe.bbq_temperature_c
-                            }
-                            °C
-                          </span>
-                        )}
-
-                        {recipe.difficulty && (
-                          <span>
-                            {recipe.difficulty}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="public-recipe-link">
-                        Bekijk recept
-                        <span>→</span>
-                      </div>
-                    </div>
-                  </Link>
-                )
-              )}
-            </div>
-          )}
+          <RecipeFilters recipes={recipesWithImages} />
         </div>
       </section>
+
+      {/* Footer */}
 
       <footer className="footer">
         <div className="site-shell footer-inner">
@@ -273,9 +147,7 @@ export default async function RecipesPage() {
             Maarto&apos;s on that Egg
           </div>
 
-          <div>
-            Fire. Food. Patience.
-          </div>
+          <div>Fire. Food. Patience.</div>
         </div>
       </footer>
     </main>
